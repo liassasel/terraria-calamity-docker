@@ -1,0 +1,15 @@
+services:
+  tml:
+    container_name: tml
+    image: hexlo/terraria-tmodloader-server:latest
+    tty: true
+    stdin_open: true
+    ports:
+      - "7777:7777"
+    volumes:
+      - ./tModLoader:/home/tml/.local/share/Terraria/tModLoader
+    environment:
+      - WORLD=/home/tml/.local/share/Terraria/tModLoader/Worlds/adriangei.wld
+      - PASSWORD=
+      - MOTD="Completamente loco y traicionado"
+    restart: unless-stopped
