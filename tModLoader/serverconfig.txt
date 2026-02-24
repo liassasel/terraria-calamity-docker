@@ -1,3 +1,4 @@
 world=/home/tml/.local/share/Terraria/tModLoader/Worlds/adriangei.wld
 password=
 motd="Completamente loco y traicionado"
+autocreate=0
