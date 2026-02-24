@@ -1,57 +1,77 @@
-Comandos Básicos de Docker Compose
-Asegúrate de ejecutar estos comandos dentro de la carpeta TERRARIA-DOCK (donde se encuentra el archivo docker-compose.yml).
+#  Terraria Calamity Server - Docker Control
 
-Iniciar el servidor
-Si los contenedores ya están creados y solo quieres encenderlos para jugar:
+Guía de administración para el servidor de tModLoader (Calamity Mod) gestionado con Docker y Playit.gg.
 
-Bash
+---
+
+##  Gestión del Servidor
+
+Nota: Ejecuta siempre estos comandos dentro del directorio TERRARIA-DOCK | (Tu directorio).
+
+###  Iniciar el servidor
+Si los contenedores ya existen, usa esto para encenderlo:
+
 docker compose start
-(Alternativa: docker compose up -d)
 
-Apagar el servidor y guardar el mundo
-Este es el método seguro. Envía la señal para que tModLoader guarde el mundo adriangei.wld y luego apaga tanto el servidor como el túnel de Playit:
+Si es la primera vez:
 
-Bash
+docker compose up -d
+
+### Apagado Seguro (Guardado de mundo)
+Detiene los servicios y asegura que el mundo adriangei.wld se guarde correctamente:
+
 docker compose stop
-Reconstruir el servidor (Solo si cambias scripts o Dockerfile)
-Si agregas nuevos mods al install.txt o modificas el entrypoint.sh, necesitas reconstruir la imagen:
 
-Bash
+### Actualizar Mods o Configuración
+
+Si editaste el Dockerfile, entrypoint.sh o el archivo install.txt:
+
 docker compose up -d --build
-🔍 Monitoreo y Logs
-Para ver qué está haciendo el servidor en tiempo real (útil para saber cuándo terminó de cargar Calamity):
 
-Bash
+---
+
+## Monitoreo y Logs
+
+Ver carga de Calamity:
+
 docker logs -f calamity-server
-(Para salir de esta vista, presiona Ctrl + C).
 
-Para revisar el estado de la conexión de Playit.gg:
+Ver estado de Playit:
 
-Bash
 docker logs playit-tunnel
-🛠️ Consola del Juego y Comandos de Administrador
-Puedes interactuar directamente con la consola de Terraria para cambiar la hora, ver jugadores o enviar mensajes.
 
-1. Entrar a la consola
-Bash
+(Presiona Ctrl + C para dejar de ver los logs).
+
+---
+
+## Consola de Administrador
+
+Acceso directo a la terminal de comandos del juego.
+
+### 1. Entrar a la consola
+
 docker attach calamity-server
-2. Comandos útiles dentro del juego
-Una vez dentro, escribe cualquiera de estos comandos y presiona Enter:
 
-playing : Muestra la lista de jugadores conectados.
+### 2. Comandos útiles (Escribir dentro)
 
-say <mensaje> : Envía un mensaje amarillo a todos los jugadores.
+playing : Lista de jugadores conectados.
 
-dawn : Cambia la hora al amanecer (4:30 AM).
+say <mensaje> : Enviar anuncio global.
 
-dusk : Cambia la hora al atardecer (7:30 PM).
+dawn / dusk : Cambiar la hora del día.
 
-exit : Guarda el mundo y apaga el contenedor del servidor.
+exit : Guardar mundo y cerrar contenedor.
 
-3. Salir de la consola (¡MUY IMPORTANTE!)
-⚠️ NO presiones Ctrl + C mientras estás en la consola con attach, ya que matarás el servidor sin guardar.
-Para salir de la consola y dejar el servidor corriendo en segundo plano, usa esta secuencia de teclas:
-👉 Presiona Ctrl + P, suelta, y luego presiona Ctrl + Q.
+### 3. Cómo Salir sin apagar el servidor
 
-📶 Ver el Ping (Dentro del juego)
-Para que cualquier jugador pueda ver su latencia (Ping) en tiempo real, simplemente deben presionar la tecla F8 mientras están dentro de la partida. Esto abrirá la pantalla de depuración de red de Terraria.
+¡IMPORTANTE! NO uses Ctrl + C.
+
+Para salir de la consola y dejar el servidor encendido usa la secuencia:
+
+Presiona Ctrl + P, suelta, y luego presiona Ctrl + Q.
+
+---
+
+fin :)
+
+---
