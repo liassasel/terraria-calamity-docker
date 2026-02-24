@@ -1,4 +1,4 @@
-tModLoader:
+services:
   calamity-server:
     container_name: calamity-server
     build:
@@ -14,7 +14,14 @@ tModLoader:
       - ./tModLoader:/home/tml/.local/share/Terraria/tModLoader
     environment:
       - WORLD=/home/tml/.local/share/Terraria/tModLoader/Worlds/adriangei.wld
-      - AUTOCREATE=0
       - PASSWORD=
       - MOTD="Completamente loco y traicionado"
+      - AUTOCREATE=0
+    restart: unless-stopped
+
+  playit:
+    image: ghcr.io/playit-cloud/playit-agent:0.17
+    network_mode: host
+    environment:
+    - SECRET_KEY=21894f27ce00641f171cc30d9aa091c162e912b3d6ca42104c0feb7ed56a4db4
     restart: unless-stopped
