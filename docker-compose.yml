@@ -1,4 +1,4 @@
-services:
+tModLoader:
   calamity-server:
     container_name: calamity-server
     build:
