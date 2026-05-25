@@ -1,0 +1,9 @@
+tModLoader/
+server/
+Mods/
+Worlds/
+steamapps/
+Backups/
+*.wld
+*.tar.gz
+docker-compose.yml
