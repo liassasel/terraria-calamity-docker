@@ -24,7 +24,7 @@ echo "worldpath=$FOLDER/Worlds/" >> "$CONFIG_FILE"
 echo "world=$FOLDER/Worlds/${TMOD_WORLDNAME:-DaemonOSWorld}.wld" >> "$CONFIG_FILE"
 echo "autocreate=1" >> "$CONFIG_FILE"
 echo "worldname=${TMOD_WORLDNAME:-DaemonOSWorld}" >> "$CONFIG_FILE"
-echo "difficulty=${TMOD_DIFFICULTY:-1}" >> "$CONFIG_FILE"
+echo "difficulty=${TMOD_DIFFICULTY:-0}" >> "$CONFIG_FILE"
 
 # Crear install.txt desde TMOD_AUTODOWNLOAD si existe
 if [ -n "$TMOD_AUTODOWNLOAD" ]; then
