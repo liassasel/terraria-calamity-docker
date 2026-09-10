@@ -16,13 +16,21 @@ else
     echo "[DaemonOS] Usando versión pre-instalada en la imagen"
 fi
 
+WORLD_SIZE_NUM=3
+case "${TMOD_WORLDSIZE:-3}" in
+    1|small)  WORLD_SIZE_NUM=1 ;;
+    2|medium) WORLD_SIZE_NUM=2 ;;
+    3|large)  WORLD_SIZE_NUM=3 ;;
+    *)        WORLD_SIZE_NUM=3 ;;
+esac
+
 echo "maxplayers=${TMOD_MAXPLAYERS:-8}" > "$CONFIG_FILE"
 echo "port=${TMOD_PORT:-7777}" >> "$CONFIG_FILE"
 echo "password=${TMOD_PASS:-}" >> "$CONFIG_FILE"
 echo "motd=\"${TMOD_MOTD:-Servidor alojado en DaemonOS}\"" >> "$CONFIG_FILE"
 echo "worldpath=$FOLDER/Worlds/" >> "$CONFIG_FILE"
 echo "world=$FOLDER/Worlds/${TMOD_WORLDNAME:-DaemonOSWorld}.wld" >> "$CONFIG_FILE"
-echo "autocreate=1" >> "$CONFIG_FILE"
+echo "autocreate=$WORLD_SIZE_NUM" >> "$CONFIG_FILE"
 echo "worldname=${TMOD_WORLDNAME:-DaemonOSWorld}" >> "$CONFIG_FILE"
 echo "difficulty=${TMOD_DIFFICULTY:-0}" >> "$CONFIG_FILE"
 
@@ -86,5 +94,13 @@ if [ -n "$RAM_LIMIT" ]; then
 else
     MEM_ARG=""
 fi
+
+WORLD_SIZE_NUM=3
+case "${TMOD_WORLDSIZE:-3}" in
+    1|small)  WORLD_SIZE_NUM=1 ;;
+    2|medium) WORLD_SIZE_NUM=2 ;;
+    3|large)  WORLD_SIZE_NUM=3 ;;
+    *)        WORLD_SIZE_NUM=3 ;;
+esac
 
 ./start-tModLoaderServer.sh -config "$CONFIG_FILE" -nosteam -tmlsavedirectory "$FOLDER" $MEM_ARG
