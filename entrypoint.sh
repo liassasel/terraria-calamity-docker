@@ -34,12 +34,15 @@ echo "autocreate=$WORLD_SIZE_NUM" >> "$CONFIG_FILE"
 echo "worldname=${TMOD_WORLDNAME:-DaemonOSWorld}" >> "$CONFIG_FILE"
 echo "difficulty=${TMOD_DIFFICULTY:-0}" >> "$CONFIG_FILE"
 
-# Crear install.txt desde TMOD_AUTODOWNLOAD si existe
-if [ -n "$TMOD_AUTODOWNLOAD" ]; then
+# Crear install.txt desde TMOD_AUTODOWNLOAD solo durante la primera
+# inicializacion. Los cambios hechos desde DaemonOS deben sobrevivir reinicios.
+if [ -n "$TMOD_AUTODOWNLOAD" ] && [ ! -f "$FOLDER/Mods/install.txt" ]; then
     echo "[DaemonOS] TMOD_AUTODOWNLOAD detectado: $TMOD_AUTODOWNLOAD"
     mkdir -p "$FOLDER/Mods"
     echo "$TMOD_AUTODOWNLOAD" | tr ',' '\n' > "$FOLDER/Mods/install.txt"
     echo "[DaemonOS] install.txt creado con $(wc -l < "$FOLDER/Mods/install.txt") mods"
+elif [ -f "$FOLDER/Mods/install.txt" ]; then
+    echo "[DaemonOS] Conservando Mods/install.txt existente"
 fi
 
 if [ -f "$FOLDER/Mods/install.txt" ]; then
@@ -76,7 +79,9 @@ for TMOD_FILE in "$FOLDER/Mods/"*.tmod; do
 done
 MODS_JSON="${MODS_JSON}]"
 
-if [ "$MODS_COUNT" -gt 0 ]; then
+if [ -f "$FOLDER/Mods/enabled.json" ]; then
+    echo "[DaemonOS] Conservando Mods/enabled.json existente"
+elif [ "$MODS_COUNT" -gt 0 ]; then
     echo "$MODS_JSON" > "$FOLDER/Mods/enabled.json"
     echo "[DaemonOS] enabled.json generado con $MODS_COUNT mods: $(ls "$FOLDER/Mods/"*.tmod 2>/dev/null | xargs -I{} basename {} .tmod | tr '\n' ', ')"
 else
